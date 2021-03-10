@@ -8,7 +8,6 @@ const double DEFAULT_BAR_HEIGHT = 60;
 
 const double DEFAULT_INDICATOR_HEIGHT = 2;
 
-
 // ignore: must_be_immutable
 class TitledBottomNavigationBar extends StatefulWidget {
   final bool reverse;
@@ -18,6 +17,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
   final Color? inactiveStripColor;
   final Color? indicatorColor;
   final bool enableShadow;
+  final bool staticWidget;
   int currentIndex;
 
   /// Called when a item is tapped.
@@ -51,6 +51,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
     this.inactiveStripColor,
     this.indicatorColor,
     this.enableShadow = true,
+    this.staticWidget = false,
     this.currentIndex = 0,
     this.height = DEFAULT_BAR_HEIGHT,
     this.indicatorHeight = DEFAULT_INDICATOR_HEIGHT,
@@ -62,7 +63,6 @@ class TitledBottomNavigationBar extends StatefulWidget {
 }
 
 class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
-
   bool get reverse => widget.reverse;
 
   Curve get curve => widget.curve;
@@ -107,7 +107,10 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
                 var index = items.indexOf(item);
                 return GestureDetector(
                   onTap: () => _select(index),
-                  child: _buildItemWidget(item, index == widget.currentIndex),
+                  child: widget.staticWidget
+                      ? _buildStaticItemWidget(
+                          item, index == widget.currentIndex)
+                      : _buildItemWidget(item, index == widget.currentIndex),
                 );
               }).toList(),
             ),
@@ -155,6 +158,22 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
     );
   }
 
+  Widget _buildIconText(TitledNavigationBarItem item) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          item.icon,
+          color: reverse ? widget.inactiveColor : activeColor,
+        ),
+        DefaultTextStyle.merge(
+          child: item.title,
+          style: TextStyle(color: reverse ? widget.inactiveColor : activeColor),
+        )
+      ],
+    );
+  }
+
   Widget _buildItemWidget(TitledNavigationBarItem item, bool isSelected) {
     return Container(
       color: item.backgroundColor,
@@ -177,5 +196,15 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
         ],
       ),
     );
+  }
+
+  Widget _buildStaticItemWidget(TitledNavigationBarItem item, bool isSelected) {
+    return Container(
+        color: item.backgroundColor,
+        height: widget.height,
+        width: width / items.length,
+        child: isSelected
+            ? _buildIconText(item)
+            : Opacity(child: _buildIconText(item), opacity: 0.45));
   }
 }
