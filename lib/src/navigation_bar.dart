@@ -162,12 +162,13 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconTheme(
-          data: IconThemeData(
-            color: reverse ? widget.inactiveColor : activeColor,
-          ),
-          child: item.icon,
-        ),
+        // IconTheme(
+        //   data: IconThemeData(
+        //     color: reverse ? widget.inactiveColor : activeColor,
+        //   ),
+        //   child: item.icon,
+        // ),
+        item.icon,
         DefaultTextStyle.merge(
           child: item.title,
           style: TextStyle(color: reverse ? widget.inactiveColor : activeColor),
