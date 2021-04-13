@@ -208,7 +208,7 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
         color: item.backgroundColor,
         height: widget.height,
         width: width / items.length,
-        child: hideActiveIndicator 
+        child: widget.hideActiveIndicator 
           ? Opacity(child: _buildIconText(item), opacity: 0.45)
           : isSelected 
             ? _buildIconText(item)
