@@ -53,7 +53,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
     this.indicatorColor,
     this.enableShadow = true,
     this.staticWidget = false,
-    this.hideActiveIndicator = false;
+    this.hideActiveIndicator = false,
     this.currentIndex = 0,
     this.height = DEFAULT_BAR_HEIGHT,
     this.indicatorHeight = DEFAULT_INDICATOR_HEIGHT,
