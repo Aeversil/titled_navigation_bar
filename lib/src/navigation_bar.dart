@@ -18,6 +18,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
   final Color? indicatorColor;
   final bool enableShadow;
   final bool staticWidget;
+  final bool hideActiveIndicator;
   int currentIndex;
 
   /// Called when a item is tapped.
@@ -52,6 +53,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
     this.indicatorColor,
     this.enableShadow = true,
     this.staticWidget = false,
+    this.hideActiveIndicator = false;
     this.currentIndex = 0,
     this.height = DEFAULT_BAR_HEIGHT,
     this.indicatorHeight = DEFAULT_INDICATOR_HEIGHT,
@@ -206,7 +208,9 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
         color: item.backgroundColor,
         height: widget.height,
         width: width / items.length,
-        child: isSelected
+        child: hideActiveIndicator 
+          ? Opacity(child: _buildIconText(item), opacity: 0.45)
+          : isSelected 
             ? _buildIconText(item)
             : Opacity(child: _buildIconText(item), opacity: 0.45));
   }
