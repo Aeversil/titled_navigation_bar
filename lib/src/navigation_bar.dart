@@ -126,7 +126,7 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
             width: width,
             child: AnimatedAlign(
               alignment:
-                  Alignment(_getIndicatorPosition(overrideActiveIndicator ?? widget.currentIndex), 0),
+                  Alignment(_getIndicatorPosition(widget.overrideActiveIndicator ?? widget.currentIndex), 0),
               curve: curve,
               duration: duration,
               child: Container(
