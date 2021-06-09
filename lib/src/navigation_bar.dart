@@ -19,7 +19,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
   final bool enableShadow;
   final bool staticWidget;
   final bool hideActiveIndicator;
-  final int? blockedTab;
+  final int? overrideActiveIndicator;
   int currentIndex;
 
   /// Called when a item is tapped.
@@ -111,9 +111,8 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
                 var index = items.indexOf(item);
                 return GestureDetector(
                   onTap: () { 
-                    if(index != 4){
                       
-                    return _select(index);}},
+                    return _select(index);},
                   child: widget.staticWidget
                       ? _buildStaticItemWidget(
                           item, index == widget.currentIndex)
@@ -127,7 +126,7 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
             width: width,
             child: AnimatedAlign(
               alignment:
-                  Alignment(_getIndicatorPosition(widget.currentIndex), 0),
+                  Alignment(_getIndicatorPosition(overrideActiveIndicator ?? widget.currentIndex), 0),
               curve: curve,
               duration: duration,
               child: Container(
