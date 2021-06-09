@@ -19,7 +19,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
   final bool enableShadow;
   final bool staticWidget;
   final bool hideActiveIndicator;
-  final int blockedTab;
+  final int? blockedTab;
   int currentIndex;
 
   /// Called when a item is tapped.
