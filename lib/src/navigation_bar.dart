@@ -113,7 +113,7 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
                   onTap: () { 
                     if(index != 4){
                       
-                    return _select(index)}},
+                    return _select(index);}},
                   child: widget.staticWidget
                       ? _buildStaticItemWidget(
                           item, index == widget.currentIndex)
