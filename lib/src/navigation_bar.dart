@@ -19,6 +19,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
   final bool enableShadow;
   final bool staticWidget;
   final bool hideActiveIndicator;
+  final int blockedTab;
   int currentIndex;
 
   /// Called when a item is tapped.
@@ -54,6 +55,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
     this.enableShadow = true,
     this.staticWidget = false,
     this.hideActiveIndicator = false,
+    this.blockedTab,
     this.currentIndex = 0,
     this.height = DEFAULT_BAR_HEIGHT,
     this.indicatorHeight = DEFAULT_INDICATOR_HEIGHT,
@@ -108,7 +110,10 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
               children: items.map((item) {
                 var index = items.indexOf(item);
                 return GestureDetector(
-                  onTap: () => _select(index),
+                  onTap: () { 
+                    if(index != 4){
+                      
+                    return _select(index)}},
                   child: widget.staticWidget
                       ? _buildStaticItemWidget(
                           item, index == widget.currentIndex)
