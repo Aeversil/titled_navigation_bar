@@ -110,9 +110,9 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
               children: items.map((item) {
                 var index = items.indexOf(item);
                 return GestureDetector(
-                  onTap: () { 
-                      
-                    return _select(index);},
+                  onTap: () {
+                    return _select(index);
+                  },
                   child: widget.staticWidget
                       ? _buildStaticItemWidget(
                           item, index == widget.currentIndex)
@@ -125,14 +125,26 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
             top: 0,
             width: width,
             child: AnimatedAlign(
-              alignment:
-                  Alignment(_getIndicatorPosition(widget.overrideActiveIndicator ?? widget.currentIndex), 0),
+              alignment: Alignment(
+                  _getIndicatorPosition(
+                      widget.overrideActiveIndicator ?? widget.currentIndex),
+                  0),
               curve: curve,
               duration: duration,
               child: Container(
-                color: widget.indicatorColor ?? activeColor,
                 width: width / items.length,
+                // width: 48,
                 height: widget.indicatorHeight,
+                child: Center(
+                  child: Container(
+                    width: 48,
+                    decoration: BoxDecoration(
+                        color: widget.indicatorColor ?? activeColor,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(100),
+                            bottomRight: Radius.circular(100))),
+                  ),
+                ),
               ),
             ),
           ),
@@ -175,6 +187,7 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
         //   child: item.icon,
         // ),
         item.icon,
+        SizedBox(height: 6),
         DefaultTextStyle.merge(
           child: item.title,
           style: TextStyle(color: reverse ? widget.inactiveColor : activeColor),
