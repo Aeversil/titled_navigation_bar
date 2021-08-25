@@ -14,6 +14,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
   final Curve curve;
   final Color? activeColor;
   final Color? inactiveColor;
+  final Color? inactiveTextColor;
   final Color? inactiveStripColor;
   final Color? indicatorColor;
   final bool enableShadow;
@@ -52,6 +53,7 @@ class TitledBottomNavigationBar extends StatefulWidget {
     this.inactiveColor,
     this.inactiveStripColor,
     this.indicatorColor,
+    this.inactiveTextColor,
     this.enableShadow = true,
     this.staticWidget = false,
     this.hideActiveIndicator = false,
@@ -121,33 +123,34 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
               }).toList(),
             ),
           ),
-          Positioned(
-            top: 0,
-            width: width,
-            child: AnimatedAlign(
-              alignment: Alignment(
-                  _getIndicatorPosition(
-                      widget.overrideActiveIndicator ?? widget.currentIndex),
-                  0),
-              curve: curve,
-              duration: duration,
-              child: Container(
-                width: width / items.length,
-                // width: 48,
-                height: widget.indicatorHeight,
-                child: Center(
-                  child: Container(
-                    width: 48,
-                    decoration: BoxDecoration(
-                        color: widget.indicatorColor ?? activeColor,
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(100),
-                            bottomRight: Radius.circular(100))),
+          if (!widget.hideActiveIndicator)
+            Positioned(
+              top: 0,
+              width: width,
+              child: AnimatedAlign(
+                alignment: Alignment(
+                    _getIndicatorPosition(
+                        widget.overrideActiveIndicator ?? widget.currentIndex),
+                    0),
+                curve: curve,
+                duration: duration,
+                child: Container(
+                  width: width / items.length,
+                  // width: 48,
+                  height: widget.indicatorHeight,
+                  child: Center(
+                    child: Container(
+                      width: 48,
+                      decoration: BoxDecoration(
+                          color: widget.indicatorColor ?? activeColor,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(100),
+                              bottomRight: Radius.circular(100))),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );
@@ -176,21 +179,21 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
     );
   }
 
-  Widget _buildIconText(TitledNavigationBarItem item) {
+  Widget _buildIconText(TitledNavigationBarItem item, bool active) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // IconTheme(
-        //   data: IconThemeData(
-        //     color: reverse ? widget.inactiveColor : activeColor,
-        //   ),
-        //   child: item.icon,
-        // ),
-        item.icon,
+        IconTheme(
+          data: IconThemeData(
+            color: active ? activeColor : widget.inactiveColor,
+          ),
+          child: item.icon,
+        ),
         SizedBox(height: 6),
         DefaultTextStyle.merge(
           child: item.title,
-          style: TextStyle(color: reverse ? widget.inactiveColor : activeColor),
+          style:
+              TextStyle(color: active ? activeColor : widget.inactiveTextColor),
         )
       ],
     );
@@ -226,9 +229,9 @@ class _TitledBottomNavigationBarState extends State<TitledBottomNavigationBar> {
         height: widget.height,
         width: width / items.length,
         child: widget.hideActiveIndicator
-            ? Opacity(child: _buildIconText(item), opacity: 0.45)
+            ? _buildIconText(item, false)
             : isSelected
-                ? _buildIconText(item)
-                : Opacity(child: _buildIconText(item), opacity: 0.45));
+                ? _buildIconText(item, true)
+                : _buildIconText(item, false));
   }
 }
